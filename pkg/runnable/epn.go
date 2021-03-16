@@ -20,7 +20,7 @@ func EncryptPhoneNumber(
 ) error {
 	st := time.Now()
 	if args.Input == args.Output {
-		return errors.New("請讓輸入檔名和輸出檔名不同")
+		return errors.New("please let input and output file different")
 	}
 	inputHandle, err := os.Open(args.Input)
 	if err != nil {
@@ -53,9 +53,10 @@ func EncryptPhoneNumber(
 				return err
 			}
 		} else {
-			return errors.New("請檢查輸入檔案是否只有一個欄位")
+			return errors.New("please make sure there is only one column in input file.")
 		}
 	}
-	logger.Debugf("花了 %f 秒", time.Since(st).Seconds())
+	logger.Debugf("took %f seconds", time.Since(st).Seconds())
+	logger.Infoln("file output completed")
 	return nil
 }

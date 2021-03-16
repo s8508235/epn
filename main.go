@@ -2,6 +2,7 @@ package main
 
 import (
 	"errors"
+	"fmt"
 	"io"
 	"os"
 	"regexp"
@@ -22,7 +23,7 @@ import (
 
 var cmd = &cobra.Command{
 	Use:   appName,
-	Short: appName + " 是個將輸入檔案每行輸出成 sha256 存成 csv 之執行檔",
+	Short: appName + " is a executable that make input file line-by-line output to sha256",
 	RunE: func(cmd *cobra.Command, args []string) error {
 		initializers := []interface{}{}
 
@@ -42,7 +43,7 @@ var cmd = &cobra.Command{
 
 var check = &cobra.Command{
 	Use:   "check",
-	Short: "check 是個確認輸出檔案每行輸出為正確 sha256 格式之指令",
+	Short: "check will examine input file is a line-by-line sha256 file",
 	RunE: func(cmd *cobra.Command, args []string) error {
 		initializers := []interface{}{}
 		runnable := func(
@@ -66,14 +67,14 @@ var check = &cobra.Command{
 				}
 				if len(record) == 1 {
 					if !re.Match([]byte(record[0])) {
-						return errors.New("檔案格式有誤")
+						return errors.New("incorrect file format")
 					}
 				} else {
-					return errors.New("請檢查輸入檔案是否只有一個欄位")
+					return errors.New("please make sure there is only one column in input file.")
 				}
 			}
-			logger.Debugf("花了 %f 秒", time.Since(st).Seconds())
-			logger.Infoln("檔案沒有問題")
+			logger.Debugf("took %f seconds", time.Since(st).Seconds())
+			logger.Infoln("file examine ok.")
 			return nil
 		}
 		worker, err := mermaid.NewMermaid(
@@ -98,6 +99,9 @@ func init() {
 }
 
 func main() {
+	fmt.Printf("Version: %v\n", version)
+	fmt.Printf("Date: %v\n", date)
+	fmt.Printf("commit: %v\n", commit)
 	if err := cmd.Execute(); err != nil {
 		log.Error(err)
 		os.Exit(1)

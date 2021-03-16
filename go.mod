@@ -13,4 +13,5 @@ require (
 	github.com/spf13/viper v1.7.0
 	github.com/x-cray/logrus-prefixed-formatter v0.5.2
 	go.uber.org/dig v1.8.0
+	golang.org/x/sys v0.0.0-20210315160823-c6e025ad8005 // indirect
 )
