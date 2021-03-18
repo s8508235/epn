@@ -8,8 +8,8 @@ import (
 	"testing"
 	"time"
 
-	"gitlab.com/mi-dmp/epn/pkg/entity"
-	epnlog "gitlab.com/mi-dmp/epn/pkg/log"
+	"github.com/s8508235/epn/pkg/entity"
+	epnlog "github.com/s8508235/epn/pkg/log"
 )
 
 var faker = rand.New(rand.NewSource(time.Now().Unix()))

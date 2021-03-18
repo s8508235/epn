@@ -11,9 +11,9 @@ import (
 	"bufio"
 	"encoding/csv"
 
-	"gitlab.com/mi-dmp/epn/pkg/entity"
-	epnlog "gitlab.com/mi-dmp/epn/pkg/log"
-	"gitlab.com/mi-dmp/epn/pkg/runnable"
+	"github.com/s8508235/epn/pkg/entity"
+	epnlog "github.com/s8508235/epn/pkg/log"
+	"github.com/s8508235/epn/pkg/runnable"
 
 	"github.com/jneo8/mermaid"
 	log "github.com/sirupsen/logrus"

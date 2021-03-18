@@ -11,8 +11,8 @@ import (
 	"regexp"
 	"time"
 
+	"github.com/s8508235/epn/pkg/entity"
 	log "github.com/sirupsen/logrus"
-	"gitlab.com/mi-dmp/epn/pkg/entity"
 )
 
 func EncryptPhoneNumber(

@@ -1,4 +1,4 @@
-module gitlab.com/mi-dmp/epn
+module github.com/s8508235/epn
 
 go 1.14
 

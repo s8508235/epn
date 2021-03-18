@@ -30,8 +30,11 @@ build-win: force-build-win ## Build binary for windows
 
 ##@ Testing
 
-bench-test:  ## Run go test
+bench-test:  ## Run go benchmark test
 	go test -v -cover -bench=. -benchtime=2x ./... | tee | richgo testfilter
+
+enp-bench-test: ## Run go bench test for file creation
+	go test -run=^$ -benchmem -bench BenchmarkEncryptPhoneNumber_N_100000 -benchtime=1x ./pkg/runnable
 
 install-richgo:  ## Install richgo
 	go get -u github.com/kyoh86/richgo
