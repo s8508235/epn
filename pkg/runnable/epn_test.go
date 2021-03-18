@@ -31,6 +31,16 @@ func BenchmarkEncryptPhoneNumber_N_1500000(b *testing.B) {
 	benchmarkEncryptPhoneNumber(b, 1500000)
 }
 
+func BenchmarkEncryptPhoneNumber_N_5000000(b *testing.B) {
+	setup()
+	benchmarkEncryptPhoneNumber(b, 5000000)
+}
+
+func BenchmarkEncryptPhoneNumber_N_10000000(b *testing.B) {
+	setup()
+	benchmarkEncryptPhoneNumber(b, 10000000)
+}
+
 // Generate random ASCII digit
 func randDigit(r *rand.Rand) rune {
 	return rune(byte(r.Intn(10)) + '0')
@@ -70,7 +80,6 @@ func benchmarkEncryptPhoneNumber(
 	}
 	defer f.Close()
 	writer := csv.NewWriter(f)
-	defer writer.Flush()
 	for i := 0; i < numOfRecord; i++ {
 		pn := GenerateRandPhoneNumber()
 		record := []string{pn}
@@ -78,6 +87,7 @@ func benchmarkEncryptPhoneNumber(
 			b.Error(err)
 		}
 	}
+	writer.Flush()
 	logger.Infof("%f sec to generate file", time.Since(st).Seconds())
 
 	err = EncryptPhoneNumber(logger, entity.PhoneFileArgs{Input: "test.csv", Output: "test_output.csv"})

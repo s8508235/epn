@@ -21,9 +21,10 @@ version:  ## Show version
 force-build: FORCE
 	GOOS=linux go build -o ./bin/${PROJ}-${VERSION}.bin  -ldflags "-s -w -X main.date=${TIME} -X main.commit=${COMMIT} -X main.version=${VERSION}" ./*.go
 force-build-win: FORCE
-	GOOS=windows go build -o ./bin/${PROJ}-${VERSION}.exe  -ldflags "-s -w -X main.date=${TIME} -X main.commit=${COMMIT} -X main.version=${VERSION}" ./*.go
+	GOOS=windows go build -o ./bin/${PROJ}.exe  -ldflags "-s -w -X main.date=${TIME} -X main.commit=${COMMIT} -X main.version=${VERSION}" ./*.go
 
 build: force-build ## Build binary
+build-win: force-build-win ## Build binary for windows
 
 .PHONY: build, force-build-win
 

@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"io"
 	"os"
+	"regexp"
 	"time"
 
 	log "github.com/sirupsen/logrus"
@@ -37,6 +38,9 @@ func EncryptPhoneNumber(
 	writer := csv.NewWriter(outputHandle)
 	defer writer.Flush()
 
+	re := regexp.MustCompile(`^09[0-9]{8}$`)
+	failed := 0
+	success := 0
 	for {
 		record, err := reader.Read()
 		if err == io.EOF {
@@ -46,17 +50,24 @@ func EncryptPhoneNumber(
 			return err
 		}
 		if len(record) == 1 {
-			sum := sha256.Sum256([]byte(record[0]))
+			b := []byte(record[0])
+			if !re.Match(b) {
+				logger.Debugln(fmt.Sprintf("%s is not a phone number", record[0]))
+				failed++
+				continue
+			}
+			sum := sha256.Sum256(b)
 			row := []string{fmt.Sprintf("%x", sum)}
 			logger.Debugf("-- %s -- %s", record, row)
 			if err := writer.Write(row); err != nil {
 				return err
 			}
+			success++
 		} else {
 			return errors.New("please make sure there is only one column in input file.")
 		}
 	}
 	logger.Debugf("took %f seconds", time.Since(st).Seconds())
-	logger.Infoln("file output completed")
+	logger.Infoln("file output completed", success, "success numbers", failed, "failed numbers")
 	return nil
 }

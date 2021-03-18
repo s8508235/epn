@@ -23,7 +23,7 @@ import (
 
 var cmd = &cobra.Command{
 	Use:   appName,
-	Short: appName + " is a executable that make input file line-by-line output to sha256",
+	Short: appName + " is a executable that make input file content output to sha256 line by line",
 	RunE: func(cmd *cobra.Command, args []string) error {
 		initializers := []interface{}{}
 
